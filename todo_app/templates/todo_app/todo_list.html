@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <div>
+      <div>
+         <div>
+            <h3>Edit list:</h3>
+            <h5>{{todo_list.title}}</h5>
+         </div>
+         <ul>
+            {% for item in todoitem %}
+               <li>
+                  <div>
+                     <div role="button" onclick="location.href='#'">
+                        {{item.title}}
+                        (Due {{item.due_date | date: "l, F j"}})
+                     </div>
+                  </div>
+               </li>
+            {% empty %}
+               <p>There are no to-do items in this list.</p>
+            {% endfor %}
+         </ul>
+         <p>
+            <input type="button" value="Add a new item" onclick="location.href='#'">
+         </p>
+      </div>
+   </div>
+{% endblock %}
