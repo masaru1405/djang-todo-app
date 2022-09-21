@@ -11,9 +11,9 @@
             {% for item in todoitem %}
                <li>
                   <div>
-                     <div role="button" onclick="location.href='#'">
+                     <div role="button" onclick="location.href='{% url "item-update" todo_list.id item.id %}'">
                         {{item.title}}
-                        (Due {{item.due_date | date: "l, F j"}})
+                        (Due {{item.due_date}})
                      </div>
                   </div>
                </li>
@@ -22,7 +22,7 @@
             {% endfor %}
          </ul>
          <p>
-            <input type="button" value="Add a new item" onclick="location.href='#'">
+            <input type="button" value="Add a new item" onclick="location.href='{% url "item-add" todo_list.id %}'">
          </p>
       </div>
    </div>

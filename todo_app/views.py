@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
 
 from .models import ToDoList, ToDoItem
@@ -13,7 +14,7 @@ class ToDoListCreateView(CreateView):
    fields = ['title']
 
    def get_context_data(self):
-      context = super(ToDoListCreate, self).get_context_data()
+      context = super(ToDoListCreateView, self).get_context_data()
       context['title'] = 'Add a new list'
       return context
 
