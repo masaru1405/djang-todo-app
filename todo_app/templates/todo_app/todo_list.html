@@ -23,6 +23,7 @@
          </ul>
          <p>
             <input type="button" value="Add a new item" onclick="location.href='{% url "item-add" todo_list.id %}'">
+            <input type="button" value="Delete this list" onclick="location.href='{% url "list-delete" todo_list.id %}'">
          </p>
       </div>
    </div>

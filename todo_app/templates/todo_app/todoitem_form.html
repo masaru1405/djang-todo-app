@@ -9,5 +9,8 @@
       </table>
       <input type="button" value="Cancel" onclick="location.href='{% url "list" todo_list.id %}'"> |
       <input type="submit" value="Submit">
+      {% if object %}
+         <input type="button" value="Delete this item" onclick="location.href='{% url "item-delete" todo_list.id object.id %}'">
+      {% endif %}
    </form>
 {% endblock %}
