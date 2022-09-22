@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 h-100">
+   <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="pb-2">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex flex-row align-items-center">
+                  <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+                     placeholder="Add new...">
+                  <a href="#!" data-mdb-toggle="tooltip" title="Set due date">
+                     <i class="material-icons me-3">cloud</i>
+                  </a>    
+                  <div>
+                     <button type="button" class="btn btn-primary">Add</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+  
+
+   {% if todos %}
+      <h3 class="my-5">All my lists</h3>
+   {% endif %}
+   <ul>
+      {% for todo in todos %}
+         <li>
+            <div role="button" onclick="location.href='{% url "list" todo.id %}'">
+               {{todo.title}}
+            </div>
+         </li>
+      {% empty %}
+         <h4>You have no lists!</h4>
+      {% endfor %}
+   </ul>
+   <p>
+      <input type="button" value="Add a new list" onclick="location.href='{% url "list-add" %}'" />
+   </p>
+{% endblock %}
