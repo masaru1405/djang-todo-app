@@ -9,6 +9,11 @@ class ToDoListListView(ListView):
    context_object_name = 'todos'
    template_name = 'todo_app/index.html'
 
+   def get_queryset(self):
+      if self.request.user.is_authenticated:
+         return self.request.user.lists.all()
+      return None
+
 class ToDoListCreateView(CreateView):
    model = ToDoList
    fields = ['title']
