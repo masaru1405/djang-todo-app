@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import HttpResponseRedirect
 
 from .models import ToDoList, ToDoItem
 
@@ -23,12 +24,18 @@ class ToDoListCreateView(LoginRequiredMixin, CreateView):
       context = super(ToDoListCreateView, self).get_context_data()
       context['title'] = 'Add a new list'
       return context
+   
+   def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.user = self.request.user
+      self.object.save()
+      return HttpResponseRedirect(self.get_success_url())
 
-class ToDoListDeleteView(DeleteView):
+class ToDoListDeleteView(LoginRequiredMixin, DeleteView):
    model = ToDoList
    success_url = reverse_lazy('index')
 
-class ToDoItemListView(ListView):
+class ToDoItemListView(LoginRequiredMixin, ListView):
    model = ToDoItem
    context_object_name = 'todoitem'
    template_name = "todo_app/todo_list.html"
@@ -41,7 +48,8 @@ class ToDoItemListView(ListView):
       context['todo_list'] = ToDoList.objects.get(id=self.kwargs["list_id"])
       return context
 
-class ToDoItemCreateView(CreateView):
+###ITEM###
+class ToDoItemCreateView(LoginRequiredMixin, CreateView):
    model = ToDoItem
    fields = ["todo_list", "title", "description", "due_date"]
 
@@ -61,7 +69,7 @@ class ToDoItemCreateView(CreateView):
    def get_success_url(self):
       return reverse('list', args=[self.object.todo_list_id])
 
-class ToDoItemUpdateView(UpdateView):
+class ToDoItemUpdateView(LoginRequiredMixin, UpdateView):
    model = ToDoItem
    fields = ["todo_list", "title", "description", "due_date"]
 
@@ -74,7 +82,8 @@ class ToDoItemUpdateView(UpdateView):
    def get_success_url(self):
       return reverse('list', args=[self.object.todo_list_id])
 
-class ToDoItemDeleteView(DeleteView):
+
+class ToDoItemDeleteView(LoginRequiredMixin, DeleteView):
    model = ToDoItem
 
    def get_success_url(self):
