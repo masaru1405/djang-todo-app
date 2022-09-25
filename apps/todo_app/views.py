@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import ToDoList, ToDoItem
 
@@ -14,7 +15,7 @@ class ToDoListListView(ListView):
          return self.request.user.lists.all()
       return None
 
-class ToDoListCreateView(CreateView):
+class ToDoListCreateView(LoginRequiredMixin, CreateView):
    model = ToDoList
    fields = ['title']
 
